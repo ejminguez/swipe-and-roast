@@ -1,85 +1,43 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import Navbar from './components/Navbar.vue'
+import MobileNav from './components/MobileNav.vue'
+import { Bars3Icon } from '@heroicons/vue/16/solid'
+import { ref, onMounted } from 'vue'
+
+const isMobile = ref(window.matchMedia('(max-width: 768px)').matches)
+const isOpen = ref(false)
+
+const toggleMenu = () => {
+  isOpen.value = !isOpen.value
+}
+
+onMounted(() => {
+  window.matchMedia('(max-width: 768px)').addEventListener('change', (e) => {
+    isMobile.value = e.matches
+  })
+})
+
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+  <div v-if="isMobile" class="sticky py-4">
+    <div class="flex justify-between px-4">
+      <Bars3Icon @click="toggleMenu" class="h-8 w-8 cursor-pointer" />
+      <RouterLink to="/" class="flex gap-2 items-center">
+        Swipe&Roast
+      </RouterLink>
     </div>
-  </header>
+    <MobileNav v-if="isOpen" class="gap-8 absolute" />
+  </div>
 
-  <RouterView />
+  <div v-else class="gap-8 sticky top-0">
+    <Navbar />
+  </div>
+
+  <main class="p-8 min-h-screen items-center">
+    <RouterView />
+  </main>
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
-</style>
