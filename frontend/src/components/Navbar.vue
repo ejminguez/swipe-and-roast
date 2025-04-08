@@ -5,5 +5,6 @@
     <nav class="flex px-8 py-4 gap-8">
         <RouterLink to="/">Feed</RouterLink>
         <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/leaderboards">Leaderboards</RouterLink>
     </nav>
 </template>

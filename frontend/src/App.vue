@@ -30,7 +30,7 @@ onMounted(() => {
         Swipe&Roast
       </RouterLink>
     </div>
-    <MobileNav v-if="isOpen" class="gap-8 absolute" />
+    <MobileNav v-if="isOpen" class="gap-8 absolute ml-4" />
   </div>
 
   <div v-else class="gap-8 sticky top-0">
